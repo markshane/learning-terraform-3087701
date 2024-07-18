@@ -53,15 +53,7 @@ module "alb" {
   name    = "blog-alb"
   vpc_id  = module.blog_vpc.vpc_id
   subnets = module.blog_vpc.public_subnets
-  security_groups = module.blog_sg.security_group_id
-
-  http_tcp_listeners = [
-    {
-      port            = 80
-      protocol        = "HTTP"
-      target_group_index = 0
-    }
-  ]
+  security_groups = [module.blog_sg.security_group_id]
 
   target_groups = [
     {
@@ -75,6 +67,14 @@ module "alb" {
           port      = 80
         }
       }
+    }
+  ]
+
+  http_tcp_listeners = [
+    {
+      port            = 80
+      protocol        = "HTTP"
+      target_group_index = 0
     }
   ]
 
